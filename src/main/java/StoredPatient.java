@@ -1,11 +1,11 @@
-import org.hl7.fhir.r4.model.DateType;
+import java.util.Date;
 
 public class StoredPatient {
     private String name;
     private String lastname;
-    private DateType birthdate;
+    private Date birthdate;
 
-public StoredPatient(String name, String lastname, DateType birthdate){
+public StoredPatient(String name, String lastname, Date birthdate){
     this.name = name;
     this.lastname = lastname;
     this.birthdate = birthdate;
@@ -27,11 +27,11 @@ public StoredPatient(String name, String lastname, DateType birthdate){
         this.lastname = lastname;
     }
 
-    public DateType getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(DateType birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 }
