@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        dbHandler = new DatabaseHandler("http://localhost:8080/baseR4");
+        //dbHandler = new DatabaseHandler("http://localhost:8080/baseR4");
         FXMLLoader firstLoader = new FXMLLoader(getClass().getResource("mainView.fxml"));
         Parent root = firstLoader.load();
         Controller controller = firstLoader.getController();
@@ -22,11 +22,11 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
 
-        //StoredPatient patient = new StoredPatient("Adam", "Nowak", new Date("1995-04-01"));
-        //ArrayList<StoredPatient> lista = new ArrayList<>();
-        //lista.add(patient);
+        StoredPatient patient = new StoredPatient("Adam", "Nowak", new Date(1995,4,1));
+        ArrayList<StoredPatient> lista = new ArrayList<>();
+        lista.add(patient);
 
-        ArrayList<StoredPatient> lista = dbHandler.getPatientList();
+        //ArrayList<StoredPatient> lista = dbHandler.getPatientList();
         controller.insertPatientTable(lista);
     }
 
