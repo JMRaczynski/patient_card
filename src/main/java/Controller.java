@@ -7,12 +7,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hl7.fhir.r4.model.Patient;
 
@@ -25,6 +24,8 @@ public class Controller {
     private TextField lastnameTextField;
     @FXML
     private TableView patientTableView;
+
+    private PatientTimelineController patientTimelineController;
 
     public TableView getPatientTable() {
         return patientTableView;
@@ -51,18 +52,21 @@ public class Controller {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     StoredPatient patient = row.getItem();
                     System.out.println("Double click on: "+ patient.getName());
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("patientMore.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("patientTimeline.fxml"));
+                    patientTimelineController = loader.getController();
                     Stage stage = new Stage();
                     //stage.setAlwaysOnTop(true);
-                    //stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initModality(Modality.APPLICATION_MODAL);
                     try {
-                        stage.setScene(new Scene((AnchorPane) loader.load()));
+                        stage.setScene(new Scene((ScrollPane) loader.load()));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     stage.setTitle(patient.getName() + " " + patient.getLastname() + " - dodatkowe informacje");
                     stage.show();
+
                 }
+
             });
             return row;
         });
