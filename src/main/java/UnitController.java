@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -59,12 +60,10 @@ public class UnitController extends AnchorPane {
     }
 
     public void loadMore() {
-        //TODO: tutaj trzeba będzie jakoś rozróżnić te warianty tych różnych widoków, pomyślę o tym co i jak w zależności od typu będzie ładowany inny plik i pobierane
-        //inne dane z ustawionych zmiennych private tego kontrolera albo w ogóle będzie to załatwione po id, nie wiem jakoś trzeba będzie to rozwiązać implementuje symbolicznie
         FXMLLoader loader = new FXMLLoader(getClass().getResource("patientTimeline.fxml"));
         Stage stage = new Stage();
         try {
-            stage.setScene(new Scene((AnchorPane) loader.load()));
+            stage.setScene(new Scene((ScrollPane) loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
         }

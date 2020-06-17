@@ -8,11 +8,17 @@
    <content>
       <AnchorPane fx:id="anchorPane" prefHeight="700.0" prefWidth="890.0">
          <children>
-            <Label fx:id="title" layoutX="372.0" layoutY="14.0" text="Section header">
+            <Label fx:id="title" layoutX="29.0" layoutY="13.0" text="Patient name - timeline">
                <font>
-                  <Font size="18.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
+            <Button layoutX="696.0" layoutY="15.0" mnemonicParsing="false" text="BMI" />
+            <Button layoutX="742.0" layoutY="15.0" mnemonicParsing="false" text="Temperature" />
+            <Button layoutX="836.0" layoutY="15.0" mnemonicParsing="false" text="Weight" />
+            <DatePicker layoutX="324.0" layoutY="15.0" promptText="Start date" />
+            <DatePicker layoutX="509.0" layoutY="15.0" promptText="End date" />
+            <Label layoutX="288.0" layoutY="19.0" text="Filter:" />
          </children>
       </AnchorPane>
    </content>

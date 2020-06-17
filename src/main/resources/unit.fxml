@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="94.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UnitController">
     <children>
-        <Separator layoutX="18.0" layoutY="58.0" prefHeight="13.0" prefWidth="864.0" />
+        <Separator layoutX="11.0" layoutY="58.0" prefHeight="13.0" prefWidth="876.0" />
         <Separator layoutX="198.0" orientation="VERTICAL" prefHeight="93.0" prefWidth="6.0" />
         <Circle fill="#0abca7" layoutX="199.0" layoutY="63.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
         <VBox layoutX="214.0" layoutY="11.0" prefHeight="52.0" prefWidth="571.0">
@@ -29,7 +29,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-      <Label fx:id="timestamp" layoutX="33.0" layoutY="37.0" text="14:58:05 Wednesday, 2017-10-11">
+      <Label fx:id="timestamp" layoutX="32.0" layoutY="37.0" text="14:58:05 Wednesday, 2017-10-11">
          <font>
             <Font size="13.0" />
          </font>

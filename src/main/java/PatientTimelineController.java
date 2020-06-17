@@ -1,12 +1,16 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hl7.fhir.r4.model.Patient;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +26,25 @@ public class PatientTimelineController {
     @FXML
     private void initialize(){
 
+    }
+
+    @FXML
+    public void openGraph(ActionEvent event) {
+        //TODO: pobrać zakres do generacji danych
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("graph.fxml"));
+        Stage stage = new Stage();
+        //stage.setAlwaysOnTop(true);
+        Button source = ((Button) event.getSource());
+        String type = source.getText().toString();
+        System.out.println(type);
+        //TODO: załadowac wlasciwe dane wzgledem typu
+        stage.initModality(Modality.APPLICATION_MODAL);
+        try {
+            stage.setScene(new Scene((AnchorPane) loader.load()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.show();
     }
 
     public void populateWithData() {
@@ -60,4 +83,7 @@ public class PatientTimelineController {
     public void setTimelineList(LinkedList<TimeLineUnit> timelineList) {
         this.timelineList = timelineList;
     }
+
+
+
 }
