@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.hl7.fhir.r4.model.Patient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Controller {
@@ -24,6 +25,8 @@ public class Controller {
     private TextField lastnameTextField;
     @FXML
     private TableView patientTableView;
+    @FXML
+    private TableColumn<StoredPatient, Date> columnDate;
 
     private PatientTimelineController patientTimelineController;
 
@@ -65,13 +68,31 @@ public class Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    stage.setTitle(patient.getName() + " " + patient.getLastname() + " - dodatkowe informacje");
+                    stage.setTitle(patient.getName() + " " + patient.getLastname() + " - timeline");
                     stage.show();
 
                 }
 
             });
             return row;
+        });
+        columnDate.setCellFactory(column -> {
+            TableCell<StoredPatient, Date> cell = new TableCell<StoredPatient, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(empty) {
+                        setText(null);
+                    }
+                    else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+
+            return cell;
         });
         ObservableList<StoredPatient> list = FXCollections.observableArrayList(patients);
         FilteredList<StoredPatient> filteredList = new FilteredList<StoredPatient>(list, p->true);

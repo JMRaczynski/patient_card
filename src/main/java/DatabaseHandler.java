@@ -2,9 +2,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hl7.fhir.r4.model.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class DatabaseHandler {
 
@@ -63,13 +61,13 @@ public class DatabaseHandler {
                     String title = observation.getCode().getText();
                     String details;
                     try {
-                        details = observation.getValueQuantity().getValue().toString() + " " + observation.getValueQuantity().getUnit();
+                        details = observation.getValueQuantity().getValue().toString() + " [" + observation.getValueQuantity().getUnit() + "]";
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                         details = "XD";
                     }
-                    String date = observation.getIssued().toString();
-                    observationList.add(new TimeLineUnit(id, title, details, date));
+                    Date date = observation.getIssued();
+                    observationList.add(new TimeLineUnit(id, title, details, date, "O"));
                 }
             }
 
@@ -90,13 +88,15 @@ public class DatabaseHandler {
                 MedicationRequest medication = (MedicationRequest) medications.get(i).getResource();
                 String id = medication.getIdElement().getIdPart();
                 String title = medication.getMedicationCodeableConcept().getText();
-                String date = medication.getAuthoredOn().toString();
-                observationList.add(new TimeLineUnit(id, title, "", date));
+                Date date = medication.getAuthoredOn();
+                observationList.add(new TimeLineUnit(id, title, "", date, "M"));
             }
 
             if (bundle.getLink(Bundle.LINK_NEXT) != null) bundle = client.loadPage().next(bundle).execute();
             else bundle = null;
         }
+
+        observationList.sort(Comparator.comparing(TimeLineUnit::getDate).reversed());
 
         return observationList;
     }

@@ -7,20 +7,20 @@
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <TextField fx:id="lastnameTextField" layoutX="196.0" layoutY="35.0" prefHeight="25.0" prefWidth="255.0" />
-      <Label layoutX="56.0" layoutY="39.0" text="Wyszukaj po nazwisku:" />
+      <Label layoutX="56.0" layoutY="39.0" text="Search by last name:" />
        <TableView fx:id="patientTableView" layoutX="33.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="944.0">
            <columns>
-               <TableColumn prefWidth="269.9999895095825" text="Imię">
+               <TableColumn prefWidth="269.9999895095825" text="First Name">
                    <cellValueFactory>
                        <PropertyValueFactory property="name" />
                    </cellValueFactory>
                </TableColumn>
-               <TableColumn prefWidth="173.99993896484375" text="Nazwisko">
+               <TableColumn prefWidth="173.99993896484375" text="Last Name">
                    <cellValueFactory>
                        <PropertyValueFactory property="lastname" />
                    </cellValueFactory>
                </TableColumn>
-               <TableColumn prefWidth="270.0" text="Data urodzenia">
+               <TableColumn fx:id="columnDate" prefWidth="270.0" text="Birth Date">
                    <cellValueFactory>
                        <PropertyValueFactory property="birthdate" />
                    </cellValueFactory>

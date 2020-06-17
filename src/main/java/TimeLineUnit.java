@@ -1,14 +1,18 @@
+import java.util.Date;
+
 public class TimeLineUnit {
     private String id;
     private String title;
     private String details;
-    private String date;
+    private Date date;
+    private String resourceType;
 
-    public TimeLineUnit(String id, String title, String details, String date) {
+    public TimeLineUnit(String id, String title, String details, Date date, String resourceType) {
         this.id = id;
         this.title = title;
         this.details = details;
         this.date = date;
+        this.resourceType = resourceType;
     }
 
     public String  getId() {
@@ -35,11 +39,15 @@ public class TimeLineUnit {
         this.details = details;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getResourceType() {
+        return resourceType;
     }
 }
