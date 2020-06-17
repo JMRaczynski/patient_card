@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="459.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GraphController">
    <children>
-      <LineChart layoutX="127.0" layoutY="21.0">
+      <LineChart fx:id="graph" layoutX="127.0" layoutY="21.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

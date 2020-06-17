@@ -13,11 +13,11 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="696.0" layoutY="15.0" mnemonicParsing="false" text="BMI" />
-            <Button layoutX="742.0" layoutY="15.0" mnemonicParsing="false" text="Temperature" />
-            <Button layoutX="836.0" layoutY="15.0" mnemonicParsing="false" text="Weight" />
-            <DatePicker layoutX="324.0" layoutY="15.0" promptText="Start date" />
-            <DatePicker layoutX="509.0" layoutY="15.0" promptText="End date" />
+            <Button layoutX="696.0" layoutY="15.0" mnemonicParsing="false" onAction="#openGraph" text="BMI" />
+            <Button layoutX="742.0" layoutY="15.0" mnemonicParsing="false" onAction="#openGraph" text="Temperature" />
+            <Button layoutX="836.0" layoutY="15.0" mnemonicParsing="false" onAction="#openGraph" text="Weight" />
+            <DatePicker fx:id="pickerStart" layoutX="324.0" layoutY="15.0" promptText="Start date" />
+            <DatePicker fx:id="pickerEnd" layoutX="509.0" layoutY="15.0" promptText="End date" />
             <Label layoutX="288.0" layoutY="19.0" text="Filter:" />
          </children>
       </AnchorPane>

@@ -4,7 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,9 +17,11 @@ public class UnitController extends AnchorPane {
     @FXML private Label additionalInfo;
     @FXML private Label timestamp;
     @FXML private Button moreButton;
+    @FXML private VBox vboxHover;
 
     private String filename;
     private String timelineUnitId;
+    private String details;
 
     public Label getTitle() {
         return title;
@@ -59,6 +63,10 @@ public class UnitController extends AnchorPane {
         this.timelineUnitId = timelineUnitId;
     }
 
+    public void setDetails(String details){
+        this.details = details;
+    }
+
     public void loadMore() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("patientTimeline.fxml"));
         Stage stage = new Stage();
@@ -69,5 +77,9 @@ public class UnitController extends AnchorPane {
         }
         stage.show();
 
+    }
+
+    public VBox getVboxHover() {
+        return vboxHover;
     }
 }
