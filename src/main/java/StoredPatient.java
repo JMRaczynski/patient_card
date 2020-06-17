@@ -1,15 +1,22 @@
 import java.util.Date;
 
 public class StoredPatient {
+
+    private String id;
     private String name;
     private String lastname;
     private Date birthdate;
 
-public StoredPatient(String name, String lastname, Date birthdate){
+public StoredPatient(String id, String name, String lastname, Date birthdate){
+    this.id = id;
     this.name = name;
     this.lastname = lastname;
     this.birthdate = birthdate;
 }
+
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

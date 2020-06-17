@@ -16,7 +16,7 @@ public class UnitController extends AnchorPane {
     @FXML private Button moreButton;
 
     private String filename;
-    private int timelineUnitId;
+    private String timelineUnitId;
 
     public Label getTitle() {
         return title;
@@ -50,11 +50,11 @@ public class UnitController extends AnchorPane {
         this.moreButton = moreButton;
     }
 
-    public int getTimelineUnitId() {
+    public String  getTimelineUnitId() {
         return timelineUnitId;
     }
 
-    public void setTimelineUnitId(int timelineUnitId) {
+    public void setTimelineUnitId(String timelineUnitId) {
         this.timelineUnitId = timelineUnitId;
     }
 

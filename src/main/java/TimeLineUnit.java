@@ -1,21 +1,21 @@
 public class TimeLineUnit {
-    private  int id;
+    private String id;
     private String title;
     private String details;
     private String date;
 
-    public TimeLineUnit(int id, String title, String details, String date) {
+    public TimeLineUnit(String id, String title, String details, String date) {
         this.id = id;
         this.title = title;
         this.details = details;
         this.date = date;
     }
 
-    public int getId() {
+    public String  getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

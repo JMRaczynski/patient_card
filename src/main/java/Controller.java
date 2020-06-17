@@ -53,12 +53,15 @@ public class Controller {
                     StoredPatient patient = row.getItem();
                     System.out.println("Double click on: "+ patient.getName());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("patientTimeline.fxml"));
-                    patientTimelineController = loader.getController();
                     Stage stage = new Stage();
                     //stage.setAlwaysOnTop(true);
                     stage.initModality(Modality.APPLICATION_MODAL);
+                    //LinkedList<TimeLineUnit> observationList = Main.dbHandler.getPatientInfo(patient.getId());
                     try {
                         stage.setScene(new Scene((ScrollPane) loader.load()));
+                        patientTimelineController = loader.getController();
+                        //patientTimelineController.setTimelineList(observationList);
+                        patientTimelineController.populateWithData();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

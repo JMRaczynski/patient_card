@@ -5,28 +5,34 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.hl7.fhir.r4.model.Patient;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
 public class PatientTimelineController {
 
+    private StoredPatient patient;
+    private LinkedList<TimeLineUnit> timelineList;
     @FXML private AnchorPane anchorPane;
     @FXML private Label title;
 
     @FXML
     private void initialize(){
-        //TODO: pobieranie daych o wydarzeniach z bazy?
-        LinkedList<TimeLineUnit> timelineList = new LinkedList<>();
-        timelineList.add(new TimeLineUnit(0, "Tytuł", "Dodatkowe informacje", "14.54 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(1, "Tytuł2", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(2, "Tytuł2", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(3, "Tytuł2", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(4, "Tytuł2", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(5, "Tytuł2", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(6, "Tytuł7", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
-        timelineList.add(new TimeLineUnit(6, "Tytuł8", "Dodatkowe informacje2", "17.52 środa, 28.05.2014"));
 
+    }
+
+    public void populateWithData() {
+
+        timelineList = new LinkedList<>();
+        timelineList.add(new TimeLineUnit("0", "( ͡° ͜ʖ ͡°)", "baba", "14.54 poniedzialek, 22.05.2014"));
+        timelineList.add(new TimeLineUnit("1", "( ͡° ͜ʖ ͡°)", "do", "17.52 wtorek, 23.05.2014"));
+        timelineList.add(new TimeLineUnit("2", "( ͡° ͜ʖ ͡°)", "garow", "17.52 środa, 24.05.2014"));
+        timelineList.add(new TimeLineUnit("3", "( ͡° ͜ʖ ͡°)", "to", "17.52 czwartek, 25.05.2014"));
+        timelineList.add(new TimeLineUnit("4", "( ͡° ͜ʖ ͡°)", "bedzie", "17.52 piatek, 26.05.2014"));
+        timelineList.add(new TimeLineUnit("5", "( ͡° ͜ʖ ͡°)", "na githubie", "17.52 sobota, 27.05.2014"));
+        timelineList.add(new TimeLineUnit("6", "( ͡° ͜ʖ ͡°)", "w commicie", "17.52 niedziela, 28.05.2014"));
+        timelineList.add(new TimeLineUnit("7", "( ͡° ͜ʖ ͡°)", "xD", "i znowu, tak 24/7"));
 
         VBox vbox = new VBox();
         for (TimeLineUnit timelineUnit: timelineList) {
@@ -47,4 +53,7 @@ public class PatientTimelineController {
         anchorPane.getChildren().add(vbox);
     }
 
+    public void setTimelineList(LinkedList<TimeLineUnit> timelineList) {
+        this.timelineList = timelineList;
+    }
 }

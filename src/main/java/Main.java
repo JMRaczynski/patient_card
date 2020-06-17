@@ -22,7 +22,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
 
-        StoredPatient patient = new StoredPatient("Adam", "Nowak", new Date(1995,4,1));
+        StoredPatient patient = new StoredPatient("OMEGALUL","Julia", "Tadej", new Date(1995,4,1));
         ArrayList<StoredPatient> lista = new ArrayList<>();
         lista.add(patient);
 
