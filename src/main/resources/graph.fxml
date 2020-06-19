@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 
 <AnchorPane prefHeight="459.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GraphController">
    <children>
-      <LineChart fx:id="graph" layoutX="127.0" layoutY="21.0">
+      <ScatterChart fx:id="graph" layoutX="24.0" layoutY="21.0" prefHeight="393.0" prefWidth="603.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="xAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="yAxis" side="LEFT" />
         </yAxis>
-      </LineChart>
-      <Label fx:id="yaxisLabel" layoutX="14.0" layoutY="204.0" text="LabelY" />
-      <Label layoutX="327.0" layoutY="421.0" text="LabelX" fx:id="xaxisLabel" />
+      </ScatterChart>
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ import javafx.util.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -30,6 +32,16 @@ public class PatientTimelineController {
 
     @FXML
     private void initialize(){
+
+        pickerStart.valueProperty().addListener(((observableValue, oldDate, newDate) -> {
+            //TODO: Aktualizacja listy zdarzeń (początek okresu)
+            System.out.println("XD");
+        }));
+
+        pickerEnd.valueProperty().addListener(((observableValue, oldDate, newDate) -> {
+            //TODO: Aktualizacja listy zdarzeń (koniec okresu)
+            System.out.println("K3k");
+        }));
 
     }
 
@@ -81,12 +93,23 @@ public class PatientTimelineController {
         this.timelineList = timelineList;
     }
 
+    public void filterStart(javafx.event.ActionEvent event) {
+
+    }
+
+    public void filterEnd(javafx.event.ActionEvent event) {
+
+    }
 
     public void openGraph(javafx.event.ActionEvent event) {
+
+        /*Boolean startGiven = false;
+        Boolean endGiven = false;
         try{
             LocalDate localDate = pickerStart.getValue();
             Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
             Date startDate = Date.from(instant);
+            startGiven = true;
         } catch (NullPointerException e) {
             System.out.println("OK");
         }
@@ -94,12 +117,20 @@ public class PatientTimelineController {
             LocalDate localDate = pickerEnd.getValue();
             Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
             Date endDate = Date.from(instant);
+            endGiven = true;
         } catch (NullPointerException e){
             System.out.println("OK");
         }
-
-        //TODO: ograniczyc zakres danych według pobranej daty (uwzględnić nullvalue
-
+        //TODO: ograniczyc zakres danych według pobranej daty
+        if (startGiven && endGiven) {
+            //TODO: dane z [a,b]
+        } else if (startGiven) {
+            //TODO: dane z [a,...
+        } else if (endGiven) {
+            //TODO: dane z ..,b]
+        } else {
+            //TODO: wszystkie dane
+        }*/
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("graph.fxml"));
         Stage stage = new Stage();
@@ -108,18 +139,35 @@ public class PatientTimelineController {
         String type = source.getText().toString();
         System.out.println(type);
 
-        //TODO: załadowac wlasciwe dane wzgledem typu
         stage.initModality(Modality.APPLICATION_MODAL);
         try {
             stage.setScene(new Scene((AnchorPane) loader.load()));
             GraphController graphController = loader.getController();
-            graphController.setXaxisLabel("Time");
+            graphController.xAxis.setLabel("Time");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            XYChart.Series<String, Double> series = new XYChart.Series();
             if (type.equals("BMI")){
-                graphController.setYaxisLabel("BMI");
+                series.setName("BMI");
+                series.getData().add(new XYChart.Data(new Date(2014, 05, 22, 14, 22, 33).toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),18));
+                series.getData().add(new XYChart.Data(new Date(2014, 06, 22, 14, 22, 33).toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),19));
+                series.getData().add(new XYChart.Data(new Date(2015, 04, 22, 14, 22, 33).toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),22));
+                series.getData().add(new XYChart.Data(new Date(2015, 10, 22, 14, 22, 33).toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),26));
+                series.getData().add(new XYChart.Data(new Date(2016, 06, 22, 14, 22, 33).toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),20));
+                graphController.graph.getData().add(series);
+
             } else if (type.equals("Weight")) {
-                graphController.setYaxisLabel("Weight");
+                series.setName("Weight");
+                //TODO: Load data
+                graphController.graph.getData().add(series);
             } else {
-                graphController.setYaxisLabel("Temperature");
+                series.setName("Temperature");
+                //TODO: Load data
+                graphController.graph.getData().add(series);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,3 +176,4 @@ public class PatientTimelineController {
         stage.show();
     }
 }
+
