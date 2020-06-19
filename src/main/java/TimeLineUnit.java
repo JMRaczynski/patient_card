@@ -3,14 +3,16 @@ import java.util.Date;
 public class TimeLineUnit {
     private String id;
     private String title;
+    private String value;
     private String details;
     private Date date;
     private String resourceType;
 
-    public TimeLineUnit(String id, String title, String details, Date date, String resourceType) {
+    public TimeLineUnit(String id, String title, String details, String value, Date date, String resourceType) {
         this.id = id;
         this.title = title;
         this.details = details;
+        this.value = value;
         this.date = date;
         this.resourceType = resourceType;
     }
@@ -49,5 +51,13 @@ public class TimeLineUnit {
 
     public String getResourceType() {
         return resourceType;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

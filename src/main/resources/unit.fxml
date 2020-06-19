@@ -12,7 +12,7 @@
         <Circle fill="#0abca7" layoutX="199.0" layoutY="63.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
         <VBox fx:id="vboxHover" layoutX="214.0" layoutY="11.0" prefHeight="52.0" prefWidth="571.0">
             <children>
-                <Label fx:id="title" text="Title">
+                <Label fx:id="title" text="Title" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>

@@ -12,6 +12,7 @@ import org.hl7.fhir.r4.model.Patient;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import javafx.util.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,14 +36,14 @@ public class PatientTimelineController {
     public void populateWithData() {
 
         timelineList = new LinkedList<>();
-        timelineList.add(new TimeLineUnit("0", "( ͡° ͜ʖ ͡°)", "baba", new Date(2014, 05, 22, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("1", "( ͡° ͜ʖ ͡°)", "do", new Date(2014, 05, 23, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("2", "( ͡° ͜ʖ ͡°)", "garow", new Date(2014, 05, 24, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("3", "( ͡° ͜ʖ ͡°)", "to", new Date(2014, 05, 25, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("4", "( ͡° ͜ʖ ͡°)", "bedzie", new Date(2014, 05, 26, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("5", "( ͡° ͜ʖ ͡°)", "na githubie", new Date(2014, 05, 27, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("6", "( ͡° ͜ʖ ͡°)", "w commicie", new Date(2014, 05, 28, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("7", "( ͡° ͜ʖ ͡°)", "xD", new Date(3014, 05, 29, 14, 22, 33), "M"));
+        timelineList.add(new TimeLineUnit("0", "( ͡° ͜ʖ ͡°)", "baba", "w commicie", new Date(2014, 05, 22, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("1", "( ͡° ͜ʖ ͡°)", "do","w commicie", new Date(2014, 05, 23, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("2", "( ͡° ͜ʖ ͡°)", "garow","w commicie", new Date(2014, 05, 24, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("3", "( ͡° ͜ʖ ͡°)", "to","w commicie", new Date(2014, 05, 25, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("4", "( ͡° ͜ʖ ͡°)", "bedzie", "w commicie", new Date(2014, 05, 26, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("5", "( ͡° ͜ʖ ͡°)", "na githubie","w commicie", new Date(2014, 05, 27, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("6", "( ͡° ͜ʖ ͡°)", "w commicie", "w commicie", new Date(2014, 05, 28, 14, 22, 33), "O"));
+        timelineList.add(new TimeLineUnit("7", "( ͡° ͜ʖ ͡°)", "xD", "xD", new Date(3014, 05, 29, 14, 22, 33), "M"));
 
         VBox vbox = new VBox();
         for (TimeLineUnit timelineUnit: timelineList) {
@@ -50,14 +51,15 @@ public class PatientTimelineController {
             try {
                 AnchorPane newLoadedPane = loader.load();
                 UnitController unitController = loader.getController();
-                if (timelineUnit.getResourceType().equals("O")) unitController.getMoreButton().setVisible(false);
                 unitController.getTitle().setText(timelineUnit.getTitle());
-                unitController.getAdditionalInfo().setText(timelineUnit.getDetails());
-                SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss");
+                unitController.getAdditionalInfo().setText(timelineUnit.getValue());
+                SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
                 unitController.getTimestamp().setText(format.format(timelineUnit.getDate()));
                 unitController.setTimelineUnitId(timelineUnit.getId());
-                Tooltip tooltip = new Tooltip(timelineUnit.getDetails());
-                Tooltip.install(unitController.getVboxHover(), tooltip);
+                if (timelineUnit.getResourceType().equals("M")) {
+                    Tooltip tooltip = createTooltip(timelineUnit);
+                    Tooltip.install(unitController.getVboxHover(), tooltip);
+                }
                 vbox.getChildren().add(newLoadedPane);
                 vbox.setLayoutY(50);
             } catch (IOException e) {
@@ -65,6 +67,14 @@ public class PatientTimelineController {
             }
         }
         anchorPane.getChildren().add(vbox);
+    }
+
+    private Tooltip createTooltip(TimeLineUnit timelineUnit) {
+        Tooltip tooltip = new Tooltip(timelineUnit.getDetails());
+        tooltip.setStyle("-fx-font-size: 12;");
+        tooltip.setShowDelay(Duration.millis(200));
+        tooltip.setShowDuration(Duration.minutes(2));
+        return tooltip;
     }
 
     public void setTimelineList(LinkedList<TimeLineUnit> timelineList) {

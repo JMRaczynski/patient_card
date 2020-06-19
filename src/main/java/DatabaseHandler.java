@@ -2,6 +2,9 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hl7.fhir.r4.model.*;
 
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DatabaseHandler {
@@ -55,19 +58,15 @@ public class DatabaseHandler {
 
             for (int i = 0; i < observations.size(); i++) {
                 Observation observation = (Observation) observations.get(i).getResource();
-                if (!observation.getCode().getText().equals("Tobacco smoking status NHIS") &&
-                        !observation.getCode().getText().equals("Blood Pressure")) {
-                    String id = observation.getIdElement().getIdPart();
-                    String title = observation.getCode().getText();
-                    String details;
-                    try {
-                        details = observation.getValueQuantity().getValue().toString() + " [" + observation.getValueQuantity().getUnit() + "]";
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                        details = "XD";
-                    }
+                String id = observation.getIdElement().getIdPart();
+                String title = observation.getCode().getText();
+                String value;
+                try {
+                    value = observation.getValueQuantity().getValue().setScale(2, RoundingMode.HALF_UP).toString() + " [" + observation.getValueQuantity().getUnit() + "]";
                     Date date = observation.getIssued();
-                    observationList.add(new TimeLineUnit(id, title, details, date, "O"));
+                    observationList.add(new TimeLineUnit(id, title, "", value, date, "O"));
+                } catch (Exception ignored) {
+
                 }
             }
 
@@ -89,7 +88,8 @@ public class DatabaseHandler {
                 String id = medication.getIdElement().getIdPart();
                 String title = medication.getMedicationCodeableConcept().getText();
                 Date date = medication.getAuthoredOn();
-                observationList.add(new TimeLineUnit(id, title, "", date, "M"));
+                String details = parseDosage(medication);
+                observationList.add(new TimeLineUnit(id, title, details, "", date, "M"));
             }
 
             if (bundle.getLink(Bundle.LINK_NEXT) != null) bundle = client.loadPage().next(bundle).execute();
@@ -99,5 +99,77 @@ public class DatabaseHandler {
         observationList.sort(Comparator.comparing(TimeLineUnit::getDate).reversed());
 
         return observationList;
+    }
+
+    private String parseDosage(MedicationRequest medication) {
+        Dosage dosage = medication.getDosageInstructionFirstRep();
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
+        StringBuilder text = new StringBuilder(medication.getMedicationCodeableConcept().getText());
+        text.append("\nPrescribed by: ")
+                .append(medication.getRequester().getDisplay())
+                .append("\nAuthored on: ")
+                .append(format.format(medication.getAuthoredOn()))
+                .append("\n\nDosage instruction:");
+        if (dosage.hasAsNeeded()) {
+            if (dosage.getAsNeededBooleanType().booleanValue()) {
+                text.append("\n  - Administer as needed");
+            }
+        }
+        if (dosage.hasDoseAndRate()) {
+            text.append("\n  - Number of units per dose: ")
+                    .append(dosage.getDoseAndRateFirstRep().getDoseQuantity().getValue());
+        }
+
+        if (dosage.hasMaxDosePerLifetime()) {
+            text.append("\n  - Maximal dose per lifetime: ")
+                    .append(dosage.getMaxDosePerLifetime().getValue())
+                    .append(" ")
+                    .append(dosage.getMaxDosePerLifetime().getUnit());
+        }
+        if (dosage.hasMaxDosePerAdministration()) {
+            text.append("\n  - Maximal dose per administration: ")
+                    .append(dosage.getMaxDosePerAdministration().getValue())
+                    .append(" ")
+                    .append(dosage.getMaxDosePerAdministration().getUnit());
+        }
+        if (dosage.hasMaxDosePerPeriod()) {
+            text.append("\n  - Maximal dose per period: ")
+                    .append(dosage.getMaxDosePerPeriod().getNumerator().getValue())
+                    .append(" ")
+                    .append(dosage.getMaxDosePerPeriod().getDenominator().getValue())
+                    .append(" ")
+                    .append(dosage.getMaxDosePerPeriod().getNumerator().getUnit())
+                    .append(dosage.getMaxDosePerPeriod().getDenominator().getUnit());
+        }
+        if (dosage.hasRoute()) {
+            text.append("\n  - Administration route: ")
+                    .append(dosage.getRoute().getText());
+        }
+        if (dosage.hasTiming()) {
+            Timing.TimingRepeatComponent repeat = dosage.getTiming().getRepeat();
+            text.append("\n  - Administration frequency: ")
+                    .append(repeat.getFrequency())
+                    .append(" time(s) per ")
+                    .append(repeat.getPeriod())
+                    .append(" ")
+                    .append(repeat.getPeriodUnit().getDisplay())
+                    .append("(s)");
+        }
+        if (dosage.hasMethod()) {
+            text.append("\n  - Administration method:")
+                    .append(dosage.getMethod().getText());
+        }
+        if (dosage.hasSite()) {
+            text.append("\n  - Administration site:")
+                    .append(dosage.getSite().getText());
+        }
+        if (dosage.getAdditionalInstructionFirstRep().getText() != null) {
+            text.append("\n  - Additional instructions: ")
+                    .append(dosage.getAdditionalInstructionFirstRep().getText());
+        }
+        if (text.toString().endsWith("Dosage instruction:")) {
+            return text.toString().substring(0, text.toString().lastIndexOf("\n") - 1);
+        }
+        return text.toString();
     }
 }
