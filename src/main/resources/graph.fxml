@@ -10,7 +10,7 @@
           <CategoryAxis fx:id="xAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" />
+          <NumberAxis fx:id="yAxis" side="LEFT" forceZeroInRange="false"/>
         </yAxis>
       </ScatterChart>
    </children>

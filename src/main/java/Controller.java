@@ -59,11 +59,12 @@ public class Controller {
                     Stage stage = new Stage();
                     //stage.setAlwaysOnTop(true);
                     stage.initModality(Modality.APPLICATION_MODAL);
-                    //LinkedList<TimeLineUnit> observationList = Main.dbHandler.getPatientInfo(patient.getId());
+                    LinkedList<TimeLineUnit> observationList = Main.dbHandler.getPatientInfo(patient.getId());
                     try {
                         stage.setScene(new Scene((ScrollPane) loader.load()));
                         patientTimelineController = loader.getController();
-                        //patientTimelineController.setTimelineList(observationList);
+                        patientTimelineController.setTimelineList(observationList);
+                        patientTimelineController.setFilteredTimelineList(observationList);
                         patientTimelineController.populateWithData();
                     } catch (IOException e) {
                         e.printStackTrace();
