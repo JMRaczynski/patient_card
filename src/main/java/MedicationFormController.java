@@ -8,7 +8,7 @@ import org.hl7.fhir.r4.model.MedicationRequest;
 public class MedicationFormController {
 
     @FXML public TextField textFieldMedication;
-    @FXML public DatePicker datePicker;
+    @FXML public TextField textFieldName;
     @FXML public Button buttonSave;
 
     private MedicationRequest medicationRequest;
@@ -24,6 +24,7 @@ public class MedicationFormController {
     public void saveResult(javafx.event.ActionEvent event) {
         //TODO: zapis danych
         String medication = textFieldMedication.getText();
+        String name = textFieldName.getText();
         Stage stage = (Stage) buttonSave.getScene().getWindow();
         stage.close();
     }

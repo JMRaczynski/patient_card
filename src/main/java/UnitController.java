@@ -100,7 +100,7 @@ public class UnitController extends AnchorPane {
                 MedicationFormController medicationFormController = loader.getController();
                 medicationFormController.setMedicationRequest(medicationRequest);
                 medicationFormController.textFieldMedication.setText(medicationRequest.getMedicationCodeableConcept().getText());
-                medicationFormController.datePicker.setValue(medicationRequest.getAuthoredOn().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                medicationFormController.textFieldName.setText(medicationRequest.getRequester().getDisplay());
             } catch (IOException e) {
                 e.printStackTrace();
             }

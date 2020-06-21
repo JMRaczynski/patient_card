@@ -8,11 +8,11 @@
    <children>
       <TextField fx:id="textFieldMedication" layoutX="234.0" layoutY="53.0" prefHeight="25.0" prefWidth="256.0" />
       <Label layoutX="141.0" layoutY="57.0" text="Medication" />
-      <Label layoutX="176.0" layoutY="107.0" text="Date" />
+      <Label layoutX="129.0" layoutY="105.0" text="Doctor Name" />
       <Button fx:id="buttonSave" layoutX="471.0" layoutY="242.0" mnemonicParsing="false" onAction="#saveResult" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #0abca7;" text="Save" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <DatePicker fx:id="datePicker" layoutX="234.0" layoutY="103.0" prefHeight="25.0" prefWidth="256.0" />
+      <TextField fx:id="textFieldName" layoutX="234.0" layoutY="101.0" prefHeight="25.0" prefWidth="256.0" />
    </children>
 </AnchorPane>
