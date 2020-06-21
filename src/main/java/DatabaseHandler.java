@@ -177,4 +177,10 @@ public class DatabaseHandler {
         }
         return text.toString();
     }
+
+    private void updateMedicationRequest(MedicationRequest request) {
+        client.update()
+                .resource(request)
+                .execute();
+    }
 }

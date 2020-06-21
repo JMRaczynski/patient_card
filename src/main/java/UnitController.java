@@ -74,7 +74,7 @@ public class UnitController extends AnchorPane {
         this.details = details;
     }
 
-    public void loadMore() {
+    public void openEditForm() {
         if (resourceType.equals("O")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("observationForm.fxml"));
             Stage stage = new Stage();
