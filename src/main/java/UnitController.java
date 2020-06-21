@@ -8,8 +8,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.hl7.fhir.r4.model.MedicationRequest;
+import org.hl7.fhir.r4.model.Observation;
 
 import java.io.IOException;
+import java.time.ZoneId;
 
 public class UnitController extends AnchorPane {
 
@@ -22,6 +25,10 @@ public class UnitController extends AnchorPane {
     private String filename;
     private String timelineUnitId;
     private String details;
+    private String resourceType;
+    private MedicationRequest medicationRequest;
+    private Observation observation;
+
 
     public Label getTitle() {
         return title;
@@ -68,18 +75,52 @@ public class UnitController extends AnchorPane {
     }
 
     public void loadMore() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("patientTimeline.fxml"));
-        Stage stage = new Stage();
-        try {
-            stage.setScene(new Scene((ScrollPane) loader.load()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (resourceType.equals("O")) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("observationForm.fxml"));
+            Stage stage = new Stage();
+            try {
+                stage.setScene(new Scene(loader.load()));
+                stage.setTitle("Edit information");
+                ObservationFormController observationFormController = loader.getController();
+                observationFormController.setObservation(observation);
+                observationFormController.textFieldType.setText(observation.getCode().getText());
+                observationFormController.textFieldValue.setText(observation.getValueQuantity().getValue().toString());
+                observationFormController.textFieldUnit.setText(observation.getValueQuantity().getUnit());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.show();
         }
-        stage.show();
-
+        if (resourceType.equals("M")) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("medicationRequestForm.fxml"));
+            Stage stage = new Stage();
+            try {
+                stage.setScene(new Scene(loader.load()));
+                stage.setTitle("Edit information");
+                MedicationFormController medicationFormController = loader.getController();
+                medicationFormController.setMedicationRequest(medicationRequest);
+                medicationFormController.textFieldMedication.setText(medicationRequest.getMedicationCodeableConcept().getText());
+                medicationFormController.datePicker.setValue(medicationRequest.getAuthoredOn().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.show();
+        }
     }
 
     public VBox getVboxHover() {
         return vboxHover;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setMedicationRequest(MedicationRequest medicationRequest) {
+        this.medicationRequest = medicationRequest;
+    }
+
+    public void setObservation(Observation observation) {
+        this.observation = observation;
     }
 }

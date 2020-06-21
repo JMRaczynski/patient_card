@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="313.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ObservationFormController">
+   <children>
+      <TextField fx:id="textFieldType" layoutX="234.0" layoutY="53.0" prefHeight="25.0" prefWidth="256.0" />
+      <TextField fx:id="textFieldValue" layoutX="234.0" layoutY="103.0" prefHeight="25.0" prefWidth="256.0" />
+      <TextField fx:id="textFieldUnit" layoutX="234.0" layoutY="149.0" prefHeight="25.0" prefWidth="98.0" />
+      <Label layoutX="111.0" layoutY="57.0" text="Observation Type" />
+      <Label layoutX="174.0" layoutY="107.0" text="Value" />
+      <Label layoutX="178.0" layoutY="153.0" text="Unit" />
+      <Button fx:id="buttonSave" layoutX="471.0" layoutY="242.0" mnemonicParsing="false" onAction="#saveResult" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #0abca7;" text="Save" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+   </children>
+</AnchorPane>

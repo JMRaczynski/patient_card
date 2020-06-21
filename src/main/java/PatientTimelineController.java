@@ -88,9 +88,14 @@ public class PatientTimelineController {
                 unitController.getAdditionalInfo().setText(timelineUnit.getValue());
                 unitController.getTimestamp().setText(format.format(timelineUnit.getDate()));
                 unitController.setTimelineUnitId(timelineUnit.getId());
+                unitController.setResourceType(timelineUnit.getResourceType());
                 if (timelineUnit.getResourceType().equals("M")) {
                     Tooltip tooltip = createTooltip(timelineUnit);
                     Tooltip.install(unitController.getVboxHover(), tooltip);
+                    unitController.setMedicationRequest(timelineUnit.getMedicationRequest());
+                }
+                if (timelineUnit.getResourceType().equals("O")) {
+                    unitController.setObservation(timelineUnit.getObservation());
                 }
                 vbox.getChildren().add(newLoadedPane);
                 vbox.setLayoutY(50);
@@ -117,14 +122,6 @@ public class PatientTimelineController {
         this.filteredTimelineList = (LinkedList<TimeLineUnit>) timelineList.clone();
     }
 
-    public void filterStart(javafx.event.ActionEvent event) {
-
-    }
-
-    public void filterEnd(javafx.event.ActionEvent event) {
-
-    }
-
     public void openGraph(javafx.event.ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("graph.fxml"));
         Stage stage = new Stage();
@@ -136,12 +133,12 @@ public class PatientTimelineController {
         try {
             stage.setScene(new Scene((AnchorPane) loader.load()));
             GraphController graphController = loader.getController();
-            graphController.xAxis.setLabel("Time");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             XYChart.Series<String, Double> series = new XYChart.Series();
             if (type.equals("BMI")){
                 series.setName("BMI");
                 getDataForChart("Body Mass Index", series);
+                stage.setTitle("BMI over time");
                 /*series.getData().add(new XYChart.Data(new Date(2014, 05, 22, 14, 22, 33).toInstant()
                         .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),18));
                 series.getData().add(new XYChart.Data(new Date(2014, 06, 22, 14, 22, 33).toInstant()
@@ -153,10 +150,12 @@ public class PatientTimelineController {
                 series.getData().add(new XYChart.Data(new Date(2016, 06, 22, 14, 22, 33).toInstant()
                         .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),20));*/
             } else if (type.equals("Weight")) {
-                series.setName("Weight");
+                series.setName("Body weight");
+                stage.setTitle("Body weight over time");
                 getDataForChart("Body Weight", series);
             } else {
                 series.setName("Temperature");
+                stage.setTitle("Temperature over time");
                 getDataForChart("Oral temperature", series);
             }
             graphController.graph.getData().add(series);
@@ -176,6 +175,10 @@ public class PatientTimelineController {
                                 Double.parseDouble(filteredTimelineList.get(i).getValue().split(" ")[0])));
             }
         }
+    }
+
+    public Label getTitle() {
+        return title;
     }
 }
 

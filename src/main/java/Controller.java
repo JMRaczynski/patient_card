@@ -65,6 +65,7 @@ public class Controller {
                         patientTimelineController = loader.getController();
                         patientTimelineController.setTimelineList(observationList);
                         patientTimelineController.setFilteredTimelineList(observationList);
+                        patientTimelineController.getTitle().setText(patient.getName() + " " + patient.getLastname());
                         patientTimelineController.populateWithData();
                     } catch (IOException e) {
                         e.printStackTrace();

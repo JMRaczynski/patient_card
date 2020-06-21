@@ -3,14 +3,14 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="459.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GraphController">
+<AnchorPane prefHeight="490.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GraphController">
    <children>
-      <ScatterChart fx:id="graph" layoutX="24.0" layoutY="21.0" prefHeight="393.0" prefWidth="603.0">
+      <ScatterChart fx:id="graph" layoutX="21.0" layoutY="14.0" prefHeight="437.0" prefWidth="650.0">
         <xAxis>
-          <CategoryAxis fx:id="xAxis" side="BOTTOM" />
+          <CategoryAxis side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" forceZeroInRange="false"/>
+          <NumberAxis fx:id="yAxis" forceZeroInRange="false" side="LEFT" />
         </yAxis>
       </ScatterChart>
    </children>

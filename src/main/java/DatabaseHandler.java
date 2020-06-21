@@ -4,6 +4,7 @@ import org.hl7.fhir.r4.model.*;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -64,7 +65,9 @@ public class DatabaseHandler {
                 try {
                     value = observation.getValueQuantity().getValue().setScale(2, RoundingMode.HALF_UP).toString() + " [" + observation.getValueQuantity().getUnit() + "]";
                     Date date = observation.getIssued();
-                    observationList.add(new TimeLineUnit(id, title, "", value, date, "O"));
+                    TimeLineUnit timeLineUnit = new TimeLineUnit(id, title, "", value, date, "O");
+                    timeLineUnit.setObservation(observation);
+                    observationList.add(timeLineUnit);
                 } catch (Exception ignored) {
 
                 }
@@ -89,7 +92,9 @@ public class DatabaseHandler {
                 String title = medication.getMedicationCodeableConcept().getText();
                 Date date = medication.getAuthoredOn();
                 String details = parseDosage(medication);
-                observationList.add(new TimeLineUnit(id, title, details, "", date, "M"));
+                TimeLineUnit timeLineUnit = new TimeLineUnit(id, title, details, "", date, "M");
+                timeLineUnit.setMedicationRequest(medication);
+                observationList.add(timeLineUnit);
             }
 
             if (bundle.getLink(Bundle.LINK_NEXT) != null) bundle = client.loadPage().next(bundle).execute();
