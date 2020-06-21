@@ -178,9 +178,39 @@ public class DatabaseHandler {
         return text.toString();
     }
 
-    private void updateMedicationRequest(MedicationRequest request) {
-        client.update()
-                .resource(request)
+    public void updateMedication(MedicationRequest request) {
+        Bundle bundle = client
+                .search()
+                .forResource(MedicationRequest.class)
+                .where(MedicationRequest.RES_ID.exactly().identifier(request.getIdElement().getIdPart()))
+                .returnBundle(Bundle.class)
                 .execute();
+        MedicationRequest latestRequest = (MedicationRequest) bundle.getEntry().get(0).getResource();
+        latestRequest.getMedicationCodeableConcept().setText(request.getMedicationCodeableConcept().getText());
+        latestRequest.getRequester().setDisplay(request.getRequester().getDisplay());
+        client.update()
+                .resource(latestRequest)
+                .execute();
+    }
+
+    public void updateObservation(Observation observation) {
+        Bundle bundle = client
+                .search()
+                .forResource(Observation.class)
+                .where(Observation.RES_ID.exactly().identifier(observation.getIdElement().getIdPart()))
+                .returnBundle(Bundle.class)
+                .execute();
+        Observation latestObservation = (Observation) bundle.getEntry().get(0).getResource();
+        latestObservation.getValueQuantity().setValue(observation.getValueQuantity().getValue());
+        latestObservation.getValueQuantity().setUnit(observation.getValueQuantity().getUnit());
+        latestObservation.getCode().setText(observation.getCode().getText());
+        try {
+            client.update()
+                    .resource(latestObservation)
+                    .execute();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

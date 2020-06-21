@@ -87,15 +87,11 @@ public class PatientTimelineController {
                 unitController.getTitle().setText(timelineUnit.getTitle());
                 unitController.getAdditionalInfo().setText(timelineUnit.getValue());
                 unitController.getTimestamp().setText(format.format(timelineUnit.getDate()));
-                unitController.setTimelineUnitId(timelineUnit.getId());
-                unitController.setResourceType(timelineUnit.getResourceType());
+                unitController.setTimeLineUnit(timelineUnit);
                 if (timelineUnit.getResourceType().equals("M")) {
                     Tooltip tooltip = createTooltip(timelineUnit);
                     Tooltip.install(unitController.getVboxHover(), tooltip);
-                    unitController.setMedicationRequest(timelineUnit.getMedicationRequest());
-                }
-                if (timelineUnit.getResourceType().equals("O")) {
-                    unitController.setObservation(timelineUnit.getObservation());
+                    unitController.setTooltip(tooltip);
                 }
                 vbox.getChildren().add(newLoadedPane);
                 vbox.setLayoutY(50);

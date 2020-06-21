@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Locale.setDefault(new Locale("en", "US"));
-        dbHandler = new DatabaseHandler("http://79.186.98.88:8080/baseR4");
+        dbHandler = new DatabaseHandler("http://83.23.205.13:8080/baseR4");
         FXMLLoader firstLoader = new FXMLLoader(getClass().getResource("mainView.fxml"));
         Parent root = firstLoader.load();
         Controller controller = firstLoader.getController();

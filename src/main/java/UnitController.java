@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -22,13 +23,8 @@ public class UnitController extends AnchorPane {
     @FXML private Button moreButton;
     @FXML private VBox vboxHover;
 
-    private String filename;
-    private String timelineUnitId;
-    private String details;
-    private String resourceType;
-    private MedicationRequest medicationRequest;
-    private Observation observation;
-
+    private TimeLineUnit timeLineUnit;
+    private Tooltip tooltip;
 
     public Label getTitle() {
         return title;
@@ -62,45 +58,51 @@ public class UnitController extends AnchorPane {
         this.moreButton = moreButton;
     }
 
-    public String  getTimelineUnitId() {
-        return timelineUnitId;
+    public TimeLineUnit getTimeLineUnit() {
+        return timeLineUnit;
     }
 
-    public void setTimelineUnitId(String timelineUnitId) {
-        this.timelineUnitId = timelineUnitId;
+    public void setTimeLineUnit(TimeLineUnit timeLineUnit) {
+        this.timeLineUnit = timeLineUnit;
     }
 
-    public void setDetails(String details){
-        this.details = details;
+    public Tooltip getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(Tooltip tooltip) {
+        this.tooltip = tooltip;
     }
 
     public void openEditForm() {
-        if (resourceType.equals("O")) {
+        if (timeLineUnit.getResourceType().equals("O")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("observationForm.fxml"));
             Stage stage = new Stage();
             try {
                 stage.setScene(new Scene(loader.load()));
                 stage.setTitle("Edit information");
                 ObservationFormController observationFormController = loader.getController();
-                observationFormController.setObservation(observation);
-                observationFormController.textFieldType.setText(observation.getCode().getText());
-                observationFormController.textFieldValue.setText(observation.getValueQuantity().getValue().toString());
-                observationFormController.textFieldUnit.setText(observation.getValueQuantity().getUnit());
+                observationFormController.setObservation(timeLineUnit);
+                observationFormController.setUnitController(this);
+                observationFormController.textFieldType.setText(timeLineUnit.getObservation().getCode().getText());
+                observationFormController.textFieldValue.setText(timeLineUnit.getObservation().getValueQuantity().getValue().toString());
+                observationFormController.textFieldUnit.setText(timeLineUnit.getObservation().getValueQuantity().getUnit());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             stage.show();
         }
-        if (resourceType.equals("M")) {
+        if (timeLineUnit.getResourceType().equals("M")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("medicationRequestForm.fxml"));
             Stage stage = new Stage();
             try {
                 stage.setScene(new Scene(loader.load()));
                 stage.setTitle("Edit information");
                 MedicationFormController medicationFormController = loader.getController();
-                medicationFormController.setMedicationRequest(medicationRequest);
-                medicationFormController.textFieldMedication.setText(medicationRequest.getMedicationCodeableConcept().getText());
-                medicationFormController.textFieldName.setText(medicationRequest.getRequester().getDisplay());
+                medicationFormController.setMedicationRequest(timeLineUnit);
+                medicationFormController.setUnitController(this);
+                medicationFormController.textFieldMedication.setText(timeLineUnit.getMedicationRequest().getMedicationCodeableConcept().getText());
+                medicationFormController.textFieldName.setText(timeLineUnit.getMedicationRequest().getRequester().getDisplay());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -112,15 +114,9 @@ public class UnitController extends AnchorPane {
         return vboxHover;
     }
 
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public void setMedicationRequest(MedicationRequest medicationRequest) {
-        this.medicationRequest = medicationRequest;
-    }
-
-    public void setObservation(Observation observation) {
-        this.observation = observation;
+    public void updateUnitData() {
+        this.title.setText(timeLineUnit.getTitle());
+        this.additionalInfo.setText(timeLineUnit.getValue());
+        if (this.tooltip != null) this.tooltip.setText(timeLineUnit.getDetails());
     }
 }

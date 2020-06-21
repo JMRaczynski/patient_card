@@ -11,13 +11,14 @@ public class MedicationFormController {
     @FXML public TextField textFieldName;
     @FXML public Button buttonSave;
 
-    private MedicationRequest medicationRequest;
+    private TimeLineUnit medicationRequest;
+    private UnitController unitController;
 
-    public MedicationRequest getMedicationRequest() {
+    public TimeLineUnit getMedicationRequest() {
         return medicationRequest;
     }
 
-    public void setMedicationRequest(MedicationRequest medicationRequest) {
+    public void setMedicationRequest(TimeLineUnit medicationRequest) {
         this.medicationRequest = medicationRequest;
     }
 
@@ -25,8 +26,26 @@ public class MedicationFormController {
         //TODO: zapis danych
         String medication = textFieldMedication.getText();
         String name = textFieldName.getText();
+        medicationRequest.setTitle(medication);
+        String updatedDetails = updateDetails(medication, name);
+        medicationRequest.setDetails(updatedDetails);
+        medicationRequest.getMedicationRequest().getMedicationCodeableConcept().setText(medication);
+        medicationRequest.getMedicationRequest().getRequester().setDisplay(name);
+        unitController.updateUnitData();
+        Main.dbHandler.updateMedication(medicationRequest.getMedicationRequest());
         Stage stage = (Stage) buttonSave.getScene().getWindow();
         stage.close();
+    }
+
+    public void setUnitController(UnitController unitController) {
+        this.unitController = unitController;
+    }
+
+    private String updateDetails(String newMedication, String newDoctorName) {
+        String[] lines = medicationRequest.getDetails().split("\n");
+        lines[0] = newMedication;
+        lines[1] = lines[1].substring(0, 15) + newDoctorName;
+        return String.join("\n", lines);
     }
 }
 
