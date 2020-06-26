@@ -67,16 +67,6 @@ public class PatientTimelineController {
     }
 
     public void populateWithData() {
-
-        /*timelineList.add(new TimeLineUnit("0", "( ͡° ͜ʖ ͡°)", "baba", "w commicie", new Date(2014, 05, 22, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("1", "( ͡° ͜ʖ ͡°)", "do","w commicie", new Date(2014, 05, 23, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("2", "( ͡° ͜ʖ ͡°)", "garow","w commicie", new Date(2014, 05, 24, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("3", "( ͡° ͜ʖ ͡°)", "to","w commicie", new Date(2014, 05, 25, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("4", "( ͡° ͜ʖ ͡°)", "bedzie", "w commicie", new Date(2014, 05, 26, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("5", "( ͡° ͜ʖ ͡°)", "na githubie","w commicie", new Date(2014, 05, 27, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("6", "( ͡° ͜ʖ ͡°)", "w commicie", "w commicie", new Date(2014, 05, 28, 14, 22, 33), "O"));
-        timelineList.add(new TimeLineUnit("7", "( ͡° ͜ʖ ͡°)", "xD", "xD", new Date(3014, 05, 29, 14, 22, 33), "M"));*/
-
         if (anchorPane.getChildren().size() > 7) anchorPane.getChildren().remove(7);
         VBox vbox = new VBox();
         for (TimeLineUnit timelineUnit: filteredTimelineList) {
@@ -121,7 +111,6 @@ public class PatientTimelineController {
     public void openGraph(javafx.event.ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("graph.fxml"));
         Stage stage = new Stage();
-        //stage.setAlwaysOnTop(true);
         Button source = ((Button) event.getSource());
         String type = source.getText();
 
@@ -133,24 +122,17 @@ public class PatientTimelineController {
             XYChart.Series<String, Double> series = new XYChart.Series();
             if (type.equals("BMI")){
                 series.setName("BMI");
+                graphController.graph.getYAxis().setLabel("BMI [kg/m^2]");
                 getDataForChart("Body Mass Index", series);
                 stage.setTitle("BMI over time");
-                /*series.getData().add(new XYChart.Data(new Date(2014, 05, 22, 14, 22, 33).toInstant()
-                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),18));
-                series.getData().add(new XYChart.Data(new Date(2014, 06, 22, 14, 22, 33).toInstant()
-                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),19));
-                series.getData().add(new XYChart.Data(new Date(2015, 04, 22, 14, 22, 33).toInstant()
-                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),22));
-                series.getData().add(new XYChart.Data(new Date(2015, 10, 22, 14, 22, 33).toInstant()
-                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),26));
-                series.getData().add(new XYChart.Data(new Date(2016, 06, 22, 14, 22, 33).toInstant()
-                        .atZone(ZoneId.systemDefault()).toLocalDate().format(formatter),20));*/
             } else if (type.equals("Weight")) {
                 series.setName("Body weight");
+                graphController.graph.getYAxis().setLabel("Weight [kg]");
                 stage.setTitle("Body weight over time");
                 getDataForChart("Body Weight", series);
             } else {
                 series.setName("Temperature");
+                graphController.graph.getYAxis().setLabel("Temperature [°C]");
                 stage.setTitle("Temperature over time");
                 getDataForChart("Oral temperature", series);
             }

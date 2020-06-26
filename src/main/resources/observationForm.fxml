@@ -12,6 +12,7 @@
       <Label layoutX="111.0" layoutY="57.0" text="Observation Type" />
       <Label layoutX="174.0" layoutY="107.0" text="Value" />
       <Label layoutX="178.0" layoutY="153.0" text="Unit" />
+      <Label fx:id="error" layoutX="100.0" layoutY="200.0" text="Wrong value! Please provide correct numeric value in &quot;Value&quot; field"/>
       <Button fx:id="buttonSave" layoutX="471.0" layoutY="242.0" mnemonicParsing="false" onAction="#saveResult" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #0abca7;" text="Save" textFill="WHITE">
          <font>
             <Font size="14.0" />

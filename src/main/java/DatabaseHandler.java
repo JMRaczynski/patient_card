@@ -69,7 +69,6 @@ public class DatabaseHandler {
                     timeLineUnit.setObservation(observation);
                     observationList.add(timeLineUnit);
                 } catch (Exception ignored) {
-
                 }
             }
 

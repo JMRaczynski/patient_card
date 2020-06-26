@@ -8,19 +8,19 @@
    <children>
       <TextField fx:id="lastnameTextField" layoutX="196.0" layoutY="35.0" prefHeight="25.0" prefWidth="255.0" />
       <Label layoutX="56.0" layoutY="39.0" text="Search by last name:" />
-       <TableView fx:id="patientTableView" layoutX="33.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="944.0">
+       <TableView fx:id="patientTableView" layoutX="33.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="945.0">
            <columns>
-               <TableColumn prefWidth="269.9999895095825" text="First Name">
+               <TableColumn prefWidth="315" text="First Name">
                    <cellValueFactory>
                        <PropertyValueFactory property="name" />
                    </cellValueFactory>
                </TableColumn>
-               <TableColumn prefWidth="173.99993896484375" text="Last Name">
+               <TableColumn prefWidth="315" text="Last Name">
                    <cellValueFactory>
                        <PropertyValueFactory property="lastname" />
                    </cellValueFactory>
                </TableColumn>
-               <TableColumn fx:id="columnDate" prefWidth="270.0" text="Birth Date">
+               <TableColumn fx:id="columnDate" prefWidth="315" text="Birth Date">
                    <cellValueFactory>
                        <PropertyValueFactory property="birthdate" />
                    </cellValueFactory>

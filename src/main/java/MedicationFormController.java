@@ -23,7 +23,6 @@ public class MedicationFormController {
     }
 
     public void saveResult(javafx.event.ActionEvent event) {
-        //TODO: zapis danych
         String medication = textFieldMedication.getText();
         String name = textFieldName.getText();
         medicationRequest.setTitle(medication);

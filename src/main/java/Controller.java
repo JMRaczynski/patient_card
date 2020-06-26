@@ -41,14 +41,6 @@ public class Controller {
 
     public void insertPatientTable(ArrayList<StoredPatient> patients){
 
-        /*TableView<StoredPatient> patientTableView = new TableView();
-        TableColumn name = new TableColumn("Imię");
-        name.setCellValueFactory(new PropertyValueFactory("name"));
-        TableColumn lastname = new TableColumn("Nazwisko");
-        lastname.setCellValueFactory(new PropertyValueFactory("lastname"));
-        TableColumn birthdate = new TableColumn("Data urodzenia");
-        lastname.setCellValueFactory(new PropertyValueFactory("birthdate"));
-        patientTableView.getColumns().addAll(name, lastname, birthdate);*/
         patientTableView.setRowFactory(tv -> {
             TableRow<StoredPatient> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
